@@ -40,14 +40,11 @@ class AddMeetingViewModel@Inject constructor(private val meetingsAndUsersUseCase
         }
     }
 
-    fun pushMeetingToDatabase(meetingEntity: MeetingEntity, userList:List<UserEntity>) {
-        chachedList.clear()
-        chachedList.addAll(userList)
-
+    fun pushMeetingToDatabase(meetingEntity: MeetingEntity, userList:List<UserEntity>?) {
         viewModelScope.launch {
             _uiEvent.send(MeetingViewModelDatabaseEvents.MeetingViewModelDatabaseEventsWillSave)
             ioScope.launch {
-                meetingsAndUsersUseCases.insertMeetingsAndUsers(meetingEntity, chachedList)
+                meetingsAndUsersUseCases.insertMeetingsAndUsers(meetingEntity, userList?: ArrayList())
                 viewModelScope.launch {
                     _uiEvent.send(MeetingViewModelDatabaseEvents.MeetingViewModelDatabaseEventsSaved)
                 }

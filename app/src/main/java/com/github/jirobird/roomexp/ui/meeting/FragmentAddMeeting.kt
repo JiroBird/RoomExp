@@ -28,7 +28,7 @@ class FragmentAddMeeting: Fragment(), UserListAdapter.IUserListAdapterSelectList
     }
     private lateinit var binding:FragmentAddMeetingBinding
     private val viewModel by viewModels<AddMeetingViewModel>()
-    private lateinit var _selectedUsers:List<UserEntity>
+    private var _selectedUsers:List<UserEntity>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,9 +51,6 @@ class FragmentAddMeeting: Fragment(), UserListAdapter.IUserListAdapterSelectList
             if(binding.tietNameInput.text == null || binding.tietNameInput.text.toString().isEmpty()) {
                 Toast.makeText(view.context, "Имя события обязательно", Toast.LENGTH_SHORT).show()
             } else {
-                if (!this::_selectedUsers.isInitialized) {
-                    _selectedUsers = ArrayList()
-                }
                 viewModel.pushMeetingToDatabase( MeetingEntity(meetingName = binding.tietNameInput.text.toString()), _selectedUsers)
                 binding.tietNameInput.text = null
                 (binding.rvUserList.adapter as UserListAdapter).clearSelectedUser()
