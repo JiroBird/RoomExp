@@ -21,7 +21,7 @@ class FragmentAddUser: Fragment() {
         fun newInstance() = FragmentAddUser()
     }
 
-    private val viewModel by viewModels<AddUserViewModer>()
+    private val viewModel by viewModels<AddUserViewModel>()
     private lateinit var binder: FragmentAddUserBinding
 
     override fun onCreateView(
@@ -49,7 +49,7 @@ class FragmentAddUser: Fragment() {
         }
 
         binder.rvUserList.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        binder.rvUserList.adapter = UserListAdapter()
+        binder.rvUserList.adapter = UserListAdapter(null)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycleScope.launchWhenResumed {

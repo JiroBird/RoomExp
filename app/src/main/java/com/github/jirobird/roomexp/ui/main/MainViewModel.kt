@@ -3,7 +3,10 @@ package com.github.jirobird.roomexp.ui.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.jirobird.roomexp.data.db.RoomExpDatabase
 import com.github.jirobird.roomexp.data.db.cross.MeetingWithUsers
+import com.github.jirobird.roomexp.data.repository.IMeetingsAndUsersRepository
+import com.github.jirobird.roomexp.domain.repository.MeetingsAndUsersRepositoryImpl
 import com.github.jirobird.roomexp.domain.usecases.MeetingsAndUsersUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -27,26 +30,7 @@ class MainViewModel @Inject constructor(
     val meetingListState = _meetingListState.asStateFlow()
 
     init {
-        fillMockData()
         loadMeetings()
-    }
-
-    private fun fillMockData() {
-        viewModelScope.launch {
-            ioScope.launch {
-                try {
-                    val count = meetingsAndUsersUseCases.getMeetingsCount()
-
-                    if (count == 0) {
-                        Log.d(MainViewModel::class.java.simpleName,"хуй")
-                    } else {
-                        Log.d(MainViewModel::class.java.simpleName,"$count")
-                    }
-                } catch (e:Exception) {
-
-                }
-            }
-        }
     }
 
     private fun loadMeetings() {

@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MeetingDao {
+    @Query("SELECT COUNT(meetingId) FROM MeetingEntity")
+    fun getMeetingsCount():Int
 
     @Query("SELECT * FROM MeetingEntity")
     fun getAllMeetings():Flow<List<MeetingEntity>>

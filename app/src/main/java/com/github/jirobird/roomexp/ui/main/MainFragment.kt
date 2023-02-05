@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.jirobird.roomexp.R
 import com.github.jirobird.roomexp.databinding.FragmentMainBinding
+import com.github.jirobird.roomexp.ui.meeting.FragmentAddMeeting
+import com.github.jirobird.roomexp.ui.main.view.MeetingListAdapter
 import com.github.jirobird.roomexp.ui.user.FragmentAddUser
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,19 +37,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                viewModel.meetingListState.collect { meetingList ->
-                }
-            }
-        }
-
         binding.fabAddAll.setOnClickListener {
             togglePanel()
         }
 
         binding.fabAddEvent.setOnClickListener {
             dismissPanel()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.container, FragmentAddMeeting.newInstance(), FragmentAddMeeting::class.java.simpleName)
+                .commitNow()
         }
 
         binding.fabAddUser.setOnClickListener {
@@ -54,6 +53,17 @@ class MainFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.container, FragmentAddUser.newInstance(), FragmentAddUser::class.java.simpleName)
                 .commitNow()
+        }
+
+        binding.rvMeetingsList.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        binding.rvMeetingsList.adapter = MeetingListAdapter()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                viewModel.meetingListState.collect { meetingList ->
+                    (binding.rvMeetingsList.adapter as  MeetingListAdapter).fillAdapter(meetingList)
+                }
+            }
         }
     }
 

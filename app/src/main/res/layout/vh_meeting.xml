@@ -7,8 +7,9 @@
     android:paddingHorizontal="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
+
     <TextView
-        android:id="@+id/tv_user_name"
+        android:id="@+id/tv_meeting_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,13 +19,22 @@
         />
 
     <TextView
-        android:id="@+id/tv_user_uuid"
+        android:id="@+id/tv_meeting_uuid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_name"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="4dp"
         android:text="uuid"
         />
 
+    <TextView
+        android:id="@+id/tv_users_come"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_meeting_uuid"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        android:text="человек:"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

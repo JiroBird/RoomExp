@@ -39,6 +39,7 @@ object RoomExpAppModule {
     fun provideMeetingAndUsersUseCases(repository: IMeetingsAndUsersRepository):MeetingsAndUsersUseCases {
         return MeetingsAndUsersUseCases(
             getMeetingsCount = GetMeetingsCount(repository),
+            insertMeetingsAndUsers = InsertMeetingWithUsers(repository),
             getMeetingsWithUsers = GetMeetingsWithUsers(repository),
             insertUser = InsertUser(repository),
             getAllUsers = GetAllUsers(repository)

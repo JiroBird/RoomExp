@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
-class AddUserViewModer @Inject constructor(private val meetingsAndUsersUseCases: MeetingsAndUsersUseCases
+class AddUserViewModel @Inject constructor(private val meetingsAndUsersUseCases: MeetingsAndUsersUseCases
 ):ViewModel() {
     private val supervisorJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + supervisorJob)
